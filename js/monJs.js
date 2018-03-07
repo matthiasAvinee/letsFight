@@ -38,12 +38,17 @@
 		poing
 		;
 
+	function poingLoop(){
+		window.requestAnimationFrame(poingLoop);
+		poing.update();
+		poing.afficher();	
+};
 
 	function gameLoop () {
 	
 	  window.requestAnimationFrame(gameLoop);
-	  coin.update();
-        coin.render();
+	  	coin.update();
+    	coin.afficher();
 	  
 	  window.onkeydown = function(e) {
     var key = e.keyCode || e.which;
@@ -62,16 +67,20 @@
     }
         break;
     case 38:
-    //-Move up
+    	poingLoop();
+
     	
         
         break;
    
     case 40:
-        poing.update();
-	  	poing.render();
+    	
+        
         break;
+
     default:
+    
+		
         break;
 
      
@@ -114,11 +123,12 @@
             }
         };
 		
-		that.render = function () {
+		that.afficher = function () {
 		xposition=position;
 		  // Clear the canvas
 		  that.context.clearRect(0, 0, 750, that.height);
 		  
+
 		  // Draw the animation
 		  that.context.drawImage(
 		    that.image,
@@ -136,18 +146,18 @@
 	}
 	
 	// Get canvas
-	canvas = document.getElementById("coinAnimation");
+	perso1 = document.getElementById("coinAnimation");
 	
 	position = 0;
-	canvas.width=750;
-	canvas.height=90;
+	perso1.width=750;
+	perso1.height=90;
 	// Create sprite sheet
 	coinImage = new Image();	
 	poingImage= new Image();
 
 	// Create sprite
 	coin = sprite({
-		context: canvas.getContext("2d"),
+		context: perso1.getContext("2d"),
 		width: 300,
 		height: 100,
 		image: coinImage,
@@ -156,7 +166,7 @@
 	});
 
 	poing = sprite({
-		context: canvas.getContext("2d"),
+		context: perso1.getContext("2d"),
 		width: 300,
 		height: 100,
 		image: poingImage,
@@ -170,7 +180,7 @@
 	coinImage.src = "../sprite/test.png";
 
 
-	poingImage.addEventListener("switch",gameLoop);
+	poingImage.addEventListener("switch",poingLoop);
 	poingImage.src="../sprite/spritejump.jpg";
 
 
