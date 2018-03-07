@@ -35,26 +35,38 @@
 		canvas,
 		position,
 		poingImage,
-		poing
+		poing,
+		IdPoing,
+		IdBasic
 		;
 
 	function poingLoop(){
-		window.requestAnimationFrame(poingLoop);
+		cancelAnimationFrame(IdBasic);
+		cancelAnimationFrame(IdPoing);
+		IdPoing=window.requestAnimationFrame(poingLoop);
 		poing.update();
 		poing.afficher();	
-};
+	};
 
-	function gameLoop () {
-	
-	  window.requestAnimationFrame(gameLoop);
+	function basic(){
+		cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);
+		IdBasic=window.requestAnimationFrame(basic);
 	  	coin.update();
     	coin.afficher();
+
+	};
+
+
+	function gameLoop () {
+	  basic();
 	  
 	  window.onkeydown = function(e) {
     var key = e.keyCode || e.which;
 
     switch (key) {
         case 37:
+        basic();
         if(position>0){
         position=position-10;
         
@@ -62,15 +74,15 @@
         break;
     case 39:
         //-Move right
+        basic();
         if(position<700){
         position=position+10;
+
     }
         break;
     case 38:
     	poingLoop();
 
-    	
-        
         break;
    
     case 40:
@@ -167,10 +179,10 @@
 
 	poing = sprite({
 		context: perso1.getContext("2d"),
-		width: 300,
+		width: 200,
 		height: 100,
 		image: poingImage,
-		numberOfFrames: 5,
+		numberOfFrames: 3,
 		ticksPerFrame: 5
 	});
 
@@ -181,7 +193,7 @@
 
 
 	poingImage.addEventListener("switch",poingLoop);
-	poingImage.src="../sprite/spritejump.jpg";
+	poingImage.src="../sprite/coupdepoing.png";
 
 
 } ());
