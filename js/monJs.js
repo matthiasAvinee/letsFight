@@ -28,24 +28,32 @@
         };
 }());
 
+
 (function () {
 			
 	var coin,
 		coinImage,
 		canvas,
-		position,
+		positionJ1,
 		poingImage,
 		poing,
 		IdPoing,
-		IdBasic
+		IdBasic,
+		health,
+		encours
 		;
 
 	function poingLoop(){
+
+		encours=true;
 		cancelAnimationFrame(IdBasic);
 		cancelAnimationFrame(IdPoing);
 		IdPoing=window.requestAnimationFrame(poingLoop);
 		poing.update();
-		poing.afficher();	
+		poing.afficher();
+		setTimeout(function(){ gameLoop(); }, 200);
+	
+		
 	};
 
 	function basic(){
@@ -59,50 +67,93 @@
 
 
 	function gameLoop () {
-	  basic();
+
+		
+
+		encours=false;
+		cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);	
+	    basic();
 	  
 	  window.onkeydown = function(e) {
     var key = e.keyCode || e.which;
 
+
+ 		
+
+
     switch (key) {
-        case 37:
-        basic();
-        if(position>0){
-        position=position-10;
-        
-    } 
+
+
+//Move J1
+		case 90:
+		cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);
+ 		if (!encours) {
+    		poingLoop();
+
+    		if(positionJ1+35>590){
+    			let health = document.getElementById("healthJ2");
+				health.value -= 10; //Or whatever you want to do with it.
+
+			}
+		}
+		break;
+
+		case 81:
+		cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);
+		basic();
+       		if(positionJ1>0){
+       			positionJ1=positionJ1-10;
+    		}
+		break;
+
+       case 68:
+       	cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);
+       	basic();
+        	if(positionJ1<585){
+        		positionJ1=positionJ1+10;
+
+    		}
         break;
-    case 39:
+
+        case 83:
+        break;
+
+
+//move J2
+    	case 39:
         //-Move right
-        basic();
-        if(position<700){
-        position=position+10;
-
-    }
         break;
-    case 38:
-    	poingLoop();
-
+ 		case 37:
+        // move left
         break;
-   
-    case 40:
-    	
-        
+    	case 38:
+    	//move up
         break;
 
-    default:
+    	case 40:
+    	//down
+        break;
+
+    	default:
+        break;
     
-		
-        break;
+   }
 
-     
     }
+  
+    
+
+
 
 };
 	 
     
 
-	}
+	
 	
 	function sprite (options) {
 	
@@ -129,6 +180,7 @@
                 if (frameIndex < numberOfFrames - 1) {	
                     // Go to the next frame
                     frameIndex += 1;
+
                 } else {
                     frameIndex = 0;
                 }
@@ -136,7 +188,7 @@
         };
 		
 		that.afficher = function () {
-		xposition=position;
+		xposition=positionJ1;
 		  // Clear the canvas
 		  that.context.clearRect(0, 0, 750, that.height);
 		  
@@ -159,13 +211,21 @@
 	
 	// Get canvas
 	perso1 = document.getElementById("coinAnimation");
+	boite = document.getElementById("boite");
+
 	
-	position = 0;
+
+	
+	
+	positionJ1 = 0;
 	perso1.width=750;
 	perso1.height=90;
+	
 	// Create sprite sheet
 	coinImage = new Image();	
 	poingImage= new Image();
+	boiteImage= new Image();
+	
 
 	// Create sprite
 	coin = sprite({
@@ -194,6 +254,18 @@
 
 	poingImage.addEventListener("switch",poingLoop);
 	poingImage.src="../sprite/coupdepoing.png";
+
+
+	boiteImage.addEventListener("load",function() {
+
+    var ctx=boite.getContext("2d");
+    ctx.drawImage(boiteImage,50,50,10,50,250,40,10,10,0);
+
+ 		
+})
+	boiteImage.src="../sprite/boite.jpg";
+
+
 
 
 } ());
