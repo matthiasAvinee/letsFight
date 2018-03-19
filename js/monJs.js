@@ -36,9 +36,16 @@
 		poing,
 		IdPoing,
 		IdBasic,
+<<<<<<< HEAD
 		health,
 		encours,
 		defenseJ2
+=======
+		healthJ2,
+		healthJ1,
+		defenseJ1,
+		encours
+>>>>>>> 3fe06688c7ce2a13738a5e0dea636292301a085e
 		;
 
 	function poingLoop(){
@@ -63,11 +70,19 @@
 
 	};
 
+	function defenseP1(){
+		cancelAnimationFrame(IdPoing);
+		cancelAnimationFrame(IdBasic);
+		IdBasic=window.requestAnimationFrame(basic);
+	  	drawImage()
+
+	};
+
 
 	function gameLoop () {
 
 		
-
+		defenseJ1=false;
 		encours=false;
 		defenseJ2=false;
 		cancelAnimationFrame(IdPoing);
@@ -88,9 +103,15 @@
  		if (!encours) {
     		poingLoop();
 
+<<<<<<< HEAD
     		if(positionJ1+35>590 && !defenseJ2){
     			let health = document.getElementById("healthJ2");
 				health.value -= 10; //Or whatever you want to do with it.
+=======
+    		if(positionJ1+35>590){
+    			let healthJ2 = document.getElementById("healthJ2");
+				healthJ2.value -= 10; //Or whatever you want to do with it.
+>>>>>>> 3fe06688c7ce2a13738a5e0dea636292301a085e
 
 			}
 		}
@@ -253,11 +274,16 @@
 	poingImage.addEventListener("switch",poingLoop);
 	poingImage.src="../sprite/coupdepoing.png";
 
+	defenseImage.addEventListener("switch",defenseLoop);
+	defenseImage.src="../sprite/defence.png"
+
 
 	boiteImage.addEventListener("load",function() {
 
     var ctx=boite.getContext("2d");
     ctx.drawImage(boiteImage,50,50,10,50,250,40,10,10,0);
+
+
 
  		
 })
