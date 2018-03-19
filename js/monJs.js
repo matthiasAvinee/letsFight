@@ -1,8 +1,5 @@
 (function() {
-	// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-	// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
-	// MIT license
+
 
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -40,7 +37,8 @@
 		IdPoing,
 		IdBasic,
 		health,
-		encours
+		encours,
+		defenseJ2
 		;
 
 	function poingLoop(){
@@ -71,15 +69,13 @@
 		
 
 		encours=false;
+		defenseJ2=false;
 		cancelAnimationFrame(IdPoing);
 		cancelAnimationFrame(IdBasic);	
 	    basic();
 	  
 	  window.onkeydown = function(e) {
     var key = e.keyCode || e.which;
-
-
- 		
 
 
     switch (key) {
@@ -92,7 +88,7 @@
  		if (!encours) {
     		poingLoop();
 
-    		if(positionJ1+35>590){
+    		if(positionJ1+35>590 && !defenseJ2){
     			let health = document.getElementById("healthJ2");
 				health.value -= 10; //Or whatever you want to do with it.
 
@@ -120,6 +116,7 @@
         break;
 
         case 83:
+
         break;
 
 
@@ -136,6 +133,7 @@
 
     	case 40:
     	//down
+    	defenseJ2=true;
         break;
 
     	default:
